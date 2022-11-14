@@ -46,11 +46,11 @@ jobs:
         echo "::set-output name=image::$ECR_REPOSITORY:$IMAGE_TAG"  
         
     - name: Deploy argo-cd with helm to EKS
-      uses: wahyd4/kubectl-helm-action@master
+      uses: koslib/helm-eks-action@master
       env:
-        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
       with:
-        args: |
+        command: |
           helm repo add argo-cd https://argoproj.github.io/argo-helm
           helm dep update charts/argo-cd/
           helm install argo-cd charts/argo-cd/
