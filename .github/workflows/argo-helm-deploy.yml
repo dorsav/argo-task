@@ -32,6 +32,8 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+      with:
+          registry-type: public
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
@@ -41,7 +43,7 @@ jobs:
         # Builds a docker image and pushes it to ECR
         docker build -t $ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REPOSITORY:$IMAGE_TAG
-        echo "::set-output name=image::$ECR_REPOSITORY:$IMAGE_TAG"
+        echo "::set-output name=image::$ECR_REPOSITORY:$IMAGE_TAG"  
         
     - name: Deploy argo-cd with helm to EKS
       uses: wahyd4/kubectl-helm-action@master
