@@ -5,8 +5,8 @@ argo-cd:
     extraArgs:
       - --insecure
     image:
-      repository: 706385493893.dkr.ecr.ap-northeast-1.amazonaws.com/argo-artlist
-      tag: test
+      repository: public.ecr.aws/d5d3k9y4/argo-artlist
+      tag: 4.2
     config:
       repositories: |
         - type: helm
