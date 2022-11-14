@@ -1,0 +1,14 @@
+argo-cd:
+  dex:
+    enabled: false
+  server:
+    extraArgs:
+      - --insecure
+    image:
+      repository: public.ecr.aws/d5d3k9y4/argo-artlist
+      tag: 4.2
+    config:
+      repositories: |
+        - type: helm
+          name: argo-cd
+          url: https://argoproj.github.io/argo-helm
