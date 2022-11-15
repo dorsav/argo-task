@@ -11,7 +11,8 @@ on:
 
 env:
   AWS_REGION: us-east-1                 
-  ECR_REPOSITORY: public.ecr.aws/d5d3k9y4/argo-artlist           
+  ECR_REPOSITORY: public.ecr.aws/d5d3k9y4/argo-artlist
+  CLUSTER_NAME: argo-artlist
 
 jobs:
   deploy:
@@ -44,7 +45,12 @@ jobs:
         docker build -t $ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REPOSITORY:$IMAGE_TAG"  
-        
+    
+    - name: kubeconfing
+        run:|
+          aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region eu-west-1
+          echo "KUBE_CONFIG_DATA=$(cat ~/.kube/config | base64)" >> $GITHUB_ENV
+    
     - name: Deploy argo-cd with helm to EKS
       uses: koslib/helm-eks-action@master
       env:
