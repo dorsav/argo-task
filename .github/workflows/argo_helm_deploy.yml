@@ -50,10 +50,10 @@ jobs:
       uses: WyriHaximus/github-action-helm3@v2
       with:
         exec: | 
-          aws eks update-kubeconfig --name argo-artlist --region eu-west-1
           helm repo add argo-cd https://argoproj.github.io/argo-helm
           helm dep update charts/argo-cd/
           helm install argo-cd charts/argo-cd/
+        kubeconfig: '${{ secrets.KUBE_CONFIG_DATA }}'  
     
     
    # KUBE_CONFIG_DATA 
