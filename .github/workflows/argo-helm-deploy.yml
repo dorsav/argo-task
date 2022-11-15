@@ -48,7 +48,7 @@ jobs:
     
     - name: kubeconfing
       run: |
-        aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region eu-west-1
+        aws eks update-kubeconfig --name argo-artlist --region eu-west-1
         echo "KUBE_CONFIG_DATA=$(cat ~/.kube/config | base64)" >> $GITHUB_ENV
     
     - name: Deploy argo-cd with helm to EKS
