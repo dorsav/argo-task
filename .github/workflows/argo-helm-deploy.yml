@@ -46,17 +46,17 @@ jobs:
         docker push $ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REPOSITORY:$IMAGE_TAG"  
     
-    - name: Deploy Helm
-      uses: bitovi/github-actions-deploy-eks-helm@v1.1.0
+    - name: Deploy argo-cd with helm to EKS
+      uses: WyriHaximus/github-action-helm3@v2
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-1
-        cluster-name: argo-artlist
-        config-files: charts/argo-cd/values.yaml
-        chart-path: charts/argo-cd/
-        namespace: argo-cd
-        name: argo-cd
+        exec: | 
+          helm repo add argo-cd https://argoproj.github.io/argo-helm
+          helm dep update charts/argo-cd/
+          helm install argo-cd charts/argo-cd/
+        kubeconfig: '${{ secrets.KUBE_CONFIG_DATA  }}'
+    
+    
+   # KUBE_CONFIG_DATA 
     
    #- name: kubeconfig
    #  run: |
