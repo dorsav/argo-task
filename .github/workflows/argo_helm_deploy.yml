@@ -46,6 +46,8 @@ jobs:
         docker push $ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REPOSITORY:$IMAGE_TAG"  
     
+    # Passing KUBE_CONFIG_DATA secret that holds ~/user/.kube/config 
+    # Will gather the full argo manifest from the official remote argo helm-chart and then run helm install with the image that was built in the previous step
     - name: Deploy argo-cd with helm to EKS
       uses: WyriHaximus/github-action-helm3@v2
       with:
@@ -54,22 +56,3 @@ jobs:
           helm dep update charts/argo-cd/
           helm install argo-cd charts/argo-cd/
         kubeconfig: '${{ secrets.KUBE_CONFIG_DATA }}'  
-    
-    
-   # KUBE_CONFIG_DATA 
-    
-   #- name: kubeconfig
-   #  run: |
-   #    aws eks update-kubeconfig --name argo-artlist --region eu-west-1
-   #    KUBE_CONFIG=$(cat ~/.kube/config | base64)
-   #    #echo "KUBE_CONFIG=$KUBE_CONFIG" >> $GITHUB_ENV
-   #
-   #- name: Deploy argo-cd with helm to EKS
-   #  uses: koslib/helm-eks-action@master
-   #  #env:
-   #  #  KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG }}
-   #  with:
-   #    command: |
-   #      helm repo add argo-cd https://argoproj.github.io/argo-helm
-   #      helm dep update charts/argo-cd/
-   #      helm install argo-cd charts/argo-cd/
