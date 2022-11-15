@@ -54,7 +54,6 @@ jobs:
           helm repo add argo-cd https://argoproj.github.io/argo-helm
           helm dep update charts/argo-cd/
           helm install argo-cd charts/argo-cd/
-        kubeconfig: '${{ secrets.KUBE_CONFIG_DATA  }}'
     
     
    # KUBE_CONFIG_DATA 
