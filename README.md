@@ -1,13 +1,13 @@
 # argo-task
-A short pipeline that builds, pushes and deploys ArgoCD in a K8s cluster
+A short pipeline that builds, pushes and deploys ArgoCD to a K8s cluster
 
 
 
-# Deploy ArgoCD to a Kubernetes cluster
+# Deploy ArgoCD to EKS
 
-I chose to run this all in an EKS cluster, so I've created a temp account in AWS in which I've created a cluster (eu-west-1).
+I chose to run this all in an EKS cluster, so I've created a temp account in AWS in which I've created the cluster (eu-west-1).
 
-For the purpose of the task, I also used GitHub actions as my CI system for the pipeline part. that consists of 2 main parts -
+For the purpose of the task, I also used GitHub actions as my CI system for the pipeline part, that consists of 2 main parts -
  
           build & push a docker image to some registry (In this case - ECR of course)
           
